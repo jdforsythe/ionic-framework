@@ -264,12 +264,16 @@ export class Select implements ComponentInterface {
       const copyClasses = Array.from(option.classList).filter(cls => cls !== 'hydrated').join(' ');
       const optClass = `${OPTION_CLASS} ${copyClasses}`;
 
+      const checked = inputType === 'radio' ?
+              isOptionSelected(value, selectValue, this.compareWith) :
+              Array.isArray(selectValue) && selectValue.some((val) => isOptionSelected(value, val, this.compareWith));
+
       return {
         type: inputType,
         cssClass: optClass,
         label: option.textContent || '',
         value,
-        checked: isOptionSelected(value, selectValue, this.compareWith),
+        checked,
         disabled: option.disabled
       };
     });
